@@ -25,8 +25,7 @@ app.get("/", (_req, res) => {
 });
 
 // Render output served from project root (wb_filled_test.png lives there)
-app.use("/render", express.static(process.cwd()));
-app.use("/render", express.static("render"));
+app.use("/render", express.static(path.join(process.cwd(), "render")));
 
 async function loadScenario(variant: string) {
   switch (variant) {
