@@ -231,7 +231,7 @@ const flightInfo = (withFlightInfo && fs.existsSync(flightInfoPath))
 const IMAGE_PATH =
   cargoLayoutTest
     ? "./ui/assets/atr_cargo_layout.png"
-    : (variant === "10-01" ? "./wb_page-1.png" : "./wb_page-2e3.png");
+    : (variant === "10-01" ? "./ui/assts/wb_page-1.png" : "./ui/assets/wb_page-2e3.png");
 // ==================================================
 // COORD TRANSFORM (ONLY for 10-02 / 10-03)
 // - 10-01 => identity (non cambia NULLA)

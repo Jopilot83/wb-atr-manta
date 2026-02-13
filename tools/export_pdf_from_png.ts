@@ -15,7 +15,7 @@ function formatDateIT(input?: string): string {
   return `${d}.${mm}.${y}`;
 }
 
-const PNG_PATH = "./wb_filled_test.png";
+const PNG_PATH = "./render/wb_filled_test.png";
 const FLIGHT_INFO_PATH = "state/flight_info.runtime.json";
 
 // (se presente) pagina 2 già generata dal test cargo overlay

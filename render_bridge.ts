@@ -5,7 +5,7 @@ import { createCanvas, loadImage } from "canvas";
 import { computeWB } from "./src/engine.ts";
 
 // ⚠️ usa la tua pagina base
-const BASE_IMAGE = "wb_page-1.png"; // o wb_page-2e3.png
+const BASE_IMAGE = "./ui/assets/wb_page-1.png"; // o wb_page-2e3.png
 const RENDER_DIR = path.join(process.cwd(), "render");
 
 export async function renderWB(
