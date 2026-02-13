@@ -659,6 +659,6 @@ const pdfUrl = "/" + pdfPath.replace(/\\/g, "/");
 // =============================
 // START
 // =============================
-app.listen(Number(PORT), "0.0.0.0.", () => {
+app.listen(Number(PORT), "0.0.0.0", () => {
   console.log(`✅ W&B bridge running on port ${PORT}`);
 });
