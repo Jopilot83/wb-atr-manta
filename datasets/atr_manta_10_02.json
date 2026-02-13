@@ -1,0 +1,211 @@
+{
+  "aircraft": "ATR42",
+  "variant": "MANTA_10_02",
+  "weighingDate": "15 GEN 2023",
+
+  "weighedWeight": {
+    "weightKg": 12176.0,
+    "momentKgm": 143688.976
+  },
+
+  "limits": {
+  "maxRampWeightKg": 18770,
+  "maxTakeoffWeightKg": 18600,
+  "maxLandingWeightKg": 18300,
+  "minFlightWeightKg": 12900,
+  "maxZeroFuelWeightKg": 16700
+},
+
+"cargoLimits": {
+  "LH_FW": { "maxKg": 480 },
+  "RH_FW": { "maxKg": 288 },
+  "AFT": { "maxKg": 240 }
+},
+
+  "configItems": [
+  { "id":"PILOT_COPILOT_OXYGEN_MASK", "description":"Pilot/Copilot Oxygen Regulator Mask", "weightKg":0.932, "momentKgm":3.815, "presentAtWeighing":false },
+  { "id":"PILOT_COPILOT_ANTI_SMOKE_GOGGLES", "description":"Pilot/Copilot Anti-Smoke Goggles", "weightKg":0.264, "momentKgm":1.085, "presentAtWeighing":false },
+  { "id":"PILOT_COPILOT_FLASHLIGHT", "description":"Pilot/Copilot Flashlight", "weightKg":1.000, "momentKgm":4.170, "presentAtWeighing":false },
+  { "id":"PILOT_COPILOT_HAND_MIC", "description":"Pilot/Copilot Hand Microphone", "weightKg":0.488, "momentKgm":2.294, "presentAtWeighing":false },
+  { "id":"PILOT_COPILOT_BOOMSET", "description":"Pilot/Copilot Boomset", "weightKg":0.740, "momentKgm":3.478, "presentAtWeighing":false },
+  { "id":"PILOT_COPILOT_HEADSET", "description":"Pilot/Copilot Headset", "weightKg":0.874, "momentKgm":4.108, "presentAtWeighing":false },
+  { "id":"PILOT_COPILOT_LIFE_VEST", "description":"Pilot/Copilot Crew Life Vest", "weightKg":1.056, "momentKgm":5.111, "presentAtWeighing":false },
+
+  { "id":"OXYGEN_CYLINDER_ASSY", "description":"Cylinder Assy Oxygen", "weightKg":12.150, "momentKgm":61.430, "presentAtWeighing":false },
+
+  { "id":"FIRE_FIGHTING_GLOVES", "description":"Fire Fighting Gloves", "weightKg":0.234, "momentKgm":1.184, "presentAtWeighing":false },
+  { "id":"EXTINGUISHER_HALON", "description":"Extinguisher Halon", "weightKg":2.296, "momentKgm":11.618, "presentAtWeighing":false },
+  { "id":"EMERGENCY_AXE", "description":"Emergency Axe", "weightKg":1.070, "momentKgm":5.414, "presentAtWeighing":false },
+
+  { "id":"OXYGEN_MASK_ASSY_1", "description":"Oxygen Regulator Mask Assy 1", "weightKg":0.546, "momentKgm":2.963, "presentAtWeighing":false },
+  { "id":"BOOMSET_1", "description":"Boomset 1", "weightKg":0.370, "momentKgm":2.013, "presentAtWeighing":false },
+  { "id":"ANTI_SMOKE_GOGGLES", "description":"Anti-Smoke Goggles", "weightKg":0.132, "momentKgm":0.733, "presentAtWeighing":false },
+  { "id":"CREW_LIFE_VEST", "description":"Crew Life Vest", "weightKg":0.528, "momentKgm":2.957, "presentAtWeighing":false },
+
+  { "id":"FWD_CARGO_NET", "description":"Net & Partition Fwd Cargo", "weightKg":18.500, "momentKgm":133.552, "presentAtWeighing":false },
+  { "id":"BOOMSET_2", "description":"Boomset 2", "weightKg":0.350, "momentKgm":2.555, "presentAtWeighing":false },
+  { "id":"FLASHLIGHT_FWD_PAX", "description":"Flash Light 1 (FWD Pax Cabin)", "weightKg":0.500, "momentKgm":4.150, "presentAtWeighing":false },
+
+  { "id":"OPTICAL_SIGHT", "description":"Optical Sight", "weightKg":23.000, "momentKgm":197.294, "presentAtWeighing":false },
+  { "id":"LH_PYLON", "description":"LH Pylon", "weightKg":22.100, "momentKgm":193.508, "presentAtWeighing":false },
+  { "id":"RH_PYLON", "description":"RH Pylon", "weightKg":21.300, "momentKgm":186.503, "presentAtWeighing":false },
+  { "id":"SEARCH_POD_ASSY", "description":"Search Pod Assy", "weightKg":50.700, "momentKgm":443.929, "presentAtWeighing":false },
+  { "id":"POD_DUMMY", "description":"Pod Dummy", "weightKg":35.000, "momentKgm":307.195, "presentAtWeighing":false },
+  { "id":"FLARE_DISPENSER_RH_PYLON", "description":"Flare Dispenser (N. 6 in Rh Pylon)", "weightKg":82.000, "momentKgm":744.232, "presentAtWeighing":false },
+
+  { "id":"BOOMSET_MC_RH_UPR", "description":"Boomset (M/C) (RH Upr)", "weightKg":0.350, "momentKgm":4.725, "presentAtWeighing":false },
+  { "id":"DATA_MISSION_DISPLAY", "description":"Data Mission Display", "weightKg":5.500, "momentKgm":74.250, "presentAtWeighing":false },
+  { "id":"LAPTOP", "description":"Laptop", "weightKg":5.500, "momentKgm":74.250, "presentAtWeighing":false },
+
+  { "id":"ADELT_BEACON_CARRIER", "description":"Adelt/Beacon Carrier", "weightKg":7.000, "momentKgm":98.777, "presentAtWeighing":false },
+  { "id":"ATM_CONSOLE", "description":"ATM Console", "weightKg":92.000, "momentKgm":1337.956, "presentAtWeighing":false },
+
+  { "id":"OBSERVER_BOOMSET", "description":"RH/LH Boomset (Observer)", "weightKg":0.700, "momentKgm":10.802, "presentAtWeighing":false },
+  { "id":"OBSERVER_PHOTO_CAMERA_SUPPORT", "description":"RH/LH Photo Camera Support (Observer)", "weightKg":1.500, "momentKgm":23.147, "presentAtWeighing":false },
+
+  { "id":"AIR_DROP_SYSTEM", "description":"Air Drop System", "weightKg":15.500, "momentKgm":258.850, "presentAtWeighing":false },
+  { "id":"BOOMSET_CARGO_LOADING_SYS", "description":"Boomset Cargo Loading Sys", "weightKg":0.350, "momentKgm":5.937, "presentAtWeighing":false },
+
+  { "id":"FIRST_AID_KIT_AFT", "description":"First Aid Kit (AFT Pax Cabin)", "weightKg":1.100, "momentKgm":18.887, "presentAtWeighing":false },
+
+  { "id":"STANDARD_UNITS_2", "description":"N. 2 Standard Units", "weightKg":5.780, "momentKgm":99.416, "presentAtWeighing":false },
+  { "id":"STANDARD_DRAWER_5", "description":"N. 5 Standard Drawer", "weightKg":4.150, "momentKgm":71.380, "presentAtWeighing":false },
+  { "id":"REFRIGERATOR_FREEZER", "description":"Refrigerator Freezer", "weightKg":15.430, "momentKgm":265.396, "presentAtWeighing":false },
+
+  { "id":"BOOMSET_3", "description":"Boomset 3", "weightKg":0.350, "momentKgm":6.246, "presentAtWeighing":false },
+
+  { "id":"FLASHLIGHT_ATT", "description":"Flash Light 2 (Attendant Station)", "weightKg":0.500, "momentKgm":9.030, "presentAtWeighing":false },
+  { "id":"OXYGEN_PORTABLE_CYLINDER_ATT", "description":"Oxygen Portable Cylinder (Attendant Station)", "weightKg":2.646, "momentKgm":47.787, "presentAtWeighing":false },
+  { "id":"OXYGEN_MASK_ASSY_ATT", "description":"Oxygen Mask Assy (Attendant Station)", "weightKg":0.127, "momentKgm":2.294, "presentAtWeighing":false },
+
+  { "id":"TOILET_LIQUID", "description":"Toilet Liquid", "weightKg":8.000, "momentKgm":151.200, "presentAtWeighing":false },
+  { "id":"POTABLE_WATER", "description":"Potable water", "weightKg":15.000, "momentKgm":289.800, "presentAtWeighing":false },
+  { "id":"FLIGHT_DOCUMENTS", "description":"Flight documents", "weightKg":5.000, "momentKgm":25.000, "presentAtWeighing":false },
+  { "id":"UNDRAINABLE_TO_UNUSABLE_FUEL", "description":"From undrainable fuel to unusable fuel", "weightKg":6.550, "momentKgm":81.574, "presentAtWeighing":false },
+
+  { "id":"UNUSABLE_FUEL", "description":"Unusable Fuel", "weightKg":14.250, "momentKgm":177.470, "presentAtWeighing":true },
+  { "id":"OIL_FOR_ENGINE", "description":"Oil For engine", "weightKg":40.000, "momentKgm":400.680, "presentAtWeighing":true },
+  { "id":"GALLEY_STRUCTURE", "description":"Galley Structure/Equipment", "weightKg":106.730, "momentKgm":1835.756, "presentAtWeighing":true },
+
+  { "id":"EMERGENCY_ESCAPE_ROPE", "description":"Emergency Escape Rope", "weightKg":0.761, "momentKgm":4.216, "presentAtWeighing":true },
+
+  { "id":"PORTABLE_EXTINGUISHER_FWD", "description":"Portable Fire Extinguisher Halon (FWD Pax Cabin)", "weightKg":3.200, "momentKgm":26.560, "presentAtWeighing":true },
+  { "id":"PBE_FWD", "description":"Protective Breathing Equipment (FWD Pax Cabin)", "weightKg":1.947, "momentKgm":16.160, "presentAtWeighing":true },
+  { "id":"STOWAGE_FWD", "description":"Stowage Compartment (FWD Pax Cabin)", "weightKg":0.425, "momentKgm":3.528, "presentAtWeighing":true },
+
+  { "id":"EXTINGUISHER_HALON_AFT", "description":"Extinguisher Halon (AFT Pax Cabin)", "weightKg":2.296, "momentKgm":39.422, "presentAtWeighing":true },
+  { "id":"PBE_AFT", "description":"Protective Breathing Equipment (AFT Pax Cabin)", "weightKg":1.947, "momentKgm":33.430, "presentAtWeighing":true },
+  { "id":"STOWAGE_AFT", "description":"Stowage Compartment (AFT Pax Cabin)", "weightKg":0.425, "momentKgm":7.297, "presentAtWeighing":true },
+
+  { "id":"AUXILIARY_RACK", "description":"Auxiliary Rack", "weightKg":41.300, "momentKgm":307.107, "presentAtWeighing":true },
+  { "id":"ELECTRONIC_RACK", "description":"Equipment Rack (Full Equip.)", "weightKg":127.000, "momentKgm":1149.350, "presentAtWeighing":true },
+  { "id":"MOC1_CONSOLE", "description":"MOC1 console (Full Equip.)", "weightKg":163.600, "momentKgm":1635.346, "presentAtWeighing":true },
+  { "id":"MOC1_OPERATOR_SEAT", "description":"MOC1 operator seat", "weightKg":50.400, "momentKgm":501.480, "presentAtWeighing":true },
+
+  { "id":"HALON_FIRE_EXTINGUISHER", "description":"Extinguisher Halon", "weightKg":1.350, "momentKgm":13.433, "presentAtWeighing":true },
+  { "id":"OXYGEN_MASK_ASSY_2", "description":"Oxygen Regulator Mask Assy 2", "weightKg":0.500, "momentKgm":4.975, "presentAtWeighing":true },
+
+  { "id":"GRIP_HCU", "description":"Grip (Hand Ctrl Unit-HCU)", "weightKg":0.600, "momentKgm":6.300, "presentAtWeighing":true },
+
+  { "id":"COMMUNICATION_CONSOLE", "description":"Communication Console (Full Equip.)", "weightKg":118.000, "momentKgm":1262.600, "presentAtWeighing":true },
+  { "id":"MOC2_CONSOLE", "description":"MOC2 console (Full Equip.)", "weightKg":151.000, "momentKgm":1728.950, "presentAtWeighing":true },
+  { "id":"MOC2_OPERATOR_SEAT", "description":"MOC2 operator seat", "weightKg":50.400, "momentKgm":577.080, "presentAtWeighing":true },
+  { "id":"OXYGEN_MASK_ASSY_3", "description":"Oxygen Regulator Mask Assy 3", "weightKg":0.500, "momentKgm":5.725, "presentAtWeighing":true },
+
+  { "id":"DEBRIEFING_DOUBLE_SEAT_1", "description":"Double Seat Area Debriefing 1", "weightKg":16.300, "momentKgm":208.640, "presentAtWeighing":true },
+  { "id":"REST_DOUBLE_SEAT_1", "description":"Double Seat Area Reclinable 1", "weightKg":43.000, "momentKgm":550.400, "presentAtWeighing":true },
+  { "id":"DEBRIEFING_TABLE", "description":"Debriefing Table", "weightKg":8.000, "momentKgm":108.000, "presentAtWeighing":true },
+  { "id":"REST_DOUBLE_SEAT_2", "description":"Double Seat Area Reclinable 2", "weightKg":43.000, "momentKgm":610.600, "presentAtWeighing":true },
+  { "id":"DEBRIEFING_DOUBLE_SEAT_2", "description":"Double Seat Area Debriefing 2", "weightKg":16.300, "momentKgm":233.090, "presentAtWeighing":true },
+
+  { "id":"OBSERVER_SEATS_LH_RH", "description":"LH / RH Observer Seats", "weightKg":90.000, "momentKgm":1388.790, "presentAtWeighing":true },
+  { "id":"PHOTO_CAMERA_SUPPORT_1", "description":"Photo Camera Support 1", "weightKg":0.750, "momentKgm":11.573, "presentAtWeighing":true },
+  { "id":"PHOTO_CAMERA_SUPPORT_2", "description":"Photo Camera Support 2", "weightKg":0.750, "momentKgm":11.573, "presentAtWeighing":true },
+  { "id":"SCAN_HEAD_DETECTOR", "description":"Scan Head + Detector", "weightKg":45.0, "momentKgm":634.500, "presentAtWeighing":false }
+],
+
+  "svCatalog": [
+  { "code": "AERAZUR_FWD", "description": "Aerazur FWD n°1", "unitWeightKg": 23.0, "arm": 7.684 },
+  { "code": "AERAZUR_AFT", "description": "Aerazur AFT n°2", "unitWeightKg": 23.0, "arm": 11.660 },
+
+  { "code": "SAR_LIFE_RAFT", "description": "SAR LIFE RAFT", "unitWeightKg": 35.0, "arm": 16.5 },
+  { "code": "SMOKE_MK6", "description": "Smoke Markers MK6", "unitWeightKg": 7.1, "arm": 17.0 },
+  { "code": "SMOKE_MK7", "description": "Smoke Markers MK7", "unitWeightKg": 2.2, "arm": 17.0 },
+
+  { "code": "SAJE80_CM1",  "description": "SAJE80 (CM)",  "unitWeightKg": 4.8, "arm": 8.0 },
+  { "code": "SAJE80_CM2",  "description": "SAJE80 (CM)",  "unitWeightKg": 4.8, "arm": 8.5 },
+  { "code": "SAJE80_CM3",  "description": "SAJE80 (CM)",  "unitWeightKg": 4.8, "arm": 9.0 },
+  { "code": "SAJE80_OB1",  "description": "SAJE80 (OB)",  "unitWeightKg": 4.8, "arm": 10.0 },
+  { "code": "SAJE80_OB2",  "description": "SAJE80 (OB)",  "unitWeightKg": 4.8, "arm": 10.5 },
+  { "code": "SAJE80_OB3",  "description": "SAJE80 (OB)",  "unitWeightKg": 4.8, "arm": 11.0 },
+  { "code": "SAJE80_TEV1", "description": "SAJE80 (TEV)", "unitWeightKg": 4.8, "arm": 15.4 },
+  { "code": "SAJE80_TEV2", "description": "SAJE80 (TEV)", "unitWeightKg": 4.8, "arm": 15.4 },
+  { "code": "SAJE80_TEV3", "description": "SAJE80 (TEV)", "unitWeightKg": 4.8, "arm": 15.4 }
+],
+
+
+  "cargoStations": [
+    { "id": "CARGO_7_5", "arm": 7.5 },
+    { "id": "CARGO_8", "arm": 8.0 },
+    { "id": "CARGO_8_5", "arm": 8.5 },
+    { "id": "CARGO_9", "arm": 9.0 },
+    { "id": "CARGO_9_5", "arm": 9.5 },
+    { "id": "CARGO_10", "arm": 10.0 },
+    { "id": "CARGO_10_5", "arm": 10.5 },
+    { "id": "CARGO_11", "arm": 11.0 },
+    { "id": "CARGO_11_5", "arm": 11.5 },
+    { "id": "CARGO_12", "arm": 12.0 },
+    { "id": "CARGO_12_5", "arm": 12.5 },
+    { "id": "CARGO_13", "arm": 13.0 },
+    { "id": "CARGO_13_5", "arm": 13.5 },
+    { "id": "CARGO_14", "arm": 14.0 },
+    { "id": "CARGO_14_5", "arm": 14.5 },
+    { "id": "CARGO_15", "arm": 15.0 },
+    { "id": "CARGO_15_5", "arm": 15.5 },
+    { "id": "CARGO_16", "arm": 16.0 },
+    { "id": "CARGO_16_5", "arm": 16.5 }
+  ],
+
+   "standardPersonKg": 90,
+
+"cabinCrewStations": [
+  { "id":"OBSERVER_1", "maxPersons":1, "deltaIndexPerPerson": 3.093, "unitWeightKg": 90 },
+  { "id":"OBSERVER_2", "maxPersons":1, "deltaIndexPerPerson": 3.093, "unitWeightKg": 90 },
+
+  { "id":"OPERATOR_1", "maxPersons":1, "deltaIndexPerPerson": -1.800, "unitWeightKg": 90 },
+  { "id":"OPERATOR_2", "maxPersons":1, "deltaIndexPerPerson": -0.474, "unitWeightKg": 90 },
+
+  { "id":"DEBRIEF_ROW1", "maxPersons":2, "deltaIndexPerPerson": 0.690, "unitWeightKg": 90 },
+  { "id":"DEBRIEF_ROW2", "maxPersons":2, "deltaIndexPerPerson": 2.122, "unitWeightKg": 90 },
+
+  { "id":"REST_ROW1", "maxPersons":2, "deltaIndexPerPerson": 1.139, "unitWeightKg": 90 },
+  { "id":"REST_ROW2", "maxPersons":2, "deltaIndexPerPerson": 2.122, "unitWeightKg": 90 }
+],
+
+"indexModel": {
+  "cargo": {
+    "fwd": { "kgStep": 50, "deltaIndex": -2.65 },
+    "aft": { "kgStep": 50, "deltaIndex": 3.8 }
+  },
+  "fuel": { "kgStep": 1000, "deltaIndex": 1.77 }
+},
+
+"envelope": {
+    "structural": [
+      { "weightKg": 10000, "index": -22.8 },
+      { "weightKg": 16200, "index": -32.5 },
+      { "weightKg": 18600, "index": -17.0 },
+      { "weightKg": 18600, "index": 38.0 },
+      { "weightKg": 10000, "index": 20.2 },
+      { "weightKg": 10000, "index": -22.8 }
+    ],
+    "operational": [
+      { "weightKg": 12900, "index": -19.0 },
+      { "weightKg": 16200, "index": -26.5 },
+      { "weightKg": 18600, "index": -8.0 },
+      { "weightKg": 18600, "index": 23.8 },
+      { "weightKg": 12900, "index": 12.5 },
+      { "weightKg": 12900, "index": -19.0 }
+    ]
+  }
+}

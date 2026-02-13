@@ -1,0 +1,2143 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <title>ATR 42MP – Weight & Balance</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+
+<style>
+/* =======================================================
+   BASE RESET
+   ======================================================= */
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  height: 100%;
+  background: #f2f4f7;
+  color: #222;
+  font-family: Arial, Helvetica, sans-serif;
+
+  /* IMPORTANT: la viewport NON deve scrollare */
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+/* =======================================================
+   VARIABLES
+   ======================================================= */
+:root{
+  --ui-scale: 1;
+
+  --header-h: calc(120px * var(--ui-scale));
+  --footer-h: 40px;
+
+  /* safe-area (iPad/iPhone) */
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+}
+
+/* =======================================================
+   HEADER (FIXED)
+   ======================================================= */
+header{
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+
+  /* header vero + safe-area */
+  height: calc(var(--header-h) + var(--safe-top));
+  padding-top: var(--safe-top);
+
+  background: #0b2a4a;
+  color: #fff;
+
+  display: flex;
+  align-items: center;
+  gap: calc(24px * var(--ui-scale));
+  padding-left: calc(24px * var(--ui-scale));
+  padding-right: calc(24px * var(--ui-scale));
+}
+
+header img{
+  height: calc(80px * var(--ui-scale));
+  object-fit: contain;
+  flex: 0 0 auto;
+}
+
+header .title{
+  flex: 1;
+  text-align: center;
+  font-size: calc(28px * var(--ui-scale));
+  font-weight: 700;
+  letter-spacing: .5px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+header .variant{
+  min-width: calc(160px * var(--ui-scale));
+  text-align: right;
+  flex: 0 0 auto;
+}
+
+header select{
+  font-size: calc(18px * var(--ui-scale));
+  padding: 6px 12px;
+  margin-top: 4px;
+}
+
+/* =======================================================
+   FOOTER (FIXED)
+   ======================================================= */
+footer{
+  position: fixed;
+  bottom: 0; left: 0; right: 0;
+  z-index: 10;
+
+  height: calc(var(--footer-h) + var(--safe-bottom));
+  padding-bottom: var(--safe-bottom);
+
+  background: #e0e3e7;
+  display: flex;
+  align-items: center;
+  padding-left: 16px;
+  padding-right: 16px;
+
+  font-size: 12px;
+  color: #444;
+}
+
+/* =======================================================
+   MAIN LAYOUT
+   ======================================================= */
+.container{
+  position: fixed;
+  left: 0; right: 0;
+  top: calc(var(--header-h) + var(--safe-top));
+  bottom: calc(var(--footer-h) + var(--safe-bottom));
+
+  display: flex;
+  overflow: hidden; /* niente scroll globale */
+}
+
+/* =======================================================
+   LEFT PANEL (scroll SOLO qui)
+   ======================================================= */
+.left-panel{
+  width: 420px;
+  background: #fff;
+  border-right: 1px solid #ccc;
+
+  padding: 16px;
+
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+
+  /* spazio extra in fondo per non far finire i bottoni sotto il footer */
+  padding-bottom: calc(40px + var(--safe-bottom));
+}
+
+/* =======================================================
+   BLOCKS & FORMS
+   ======================================================= */
+.block{
+  margin-bottom: 24px;
+  border: 1px solid #ddd;
+  padding: 12px;
+  border-radius: 6px;
+  background: #fafafa;
+}
+
+.block h3{
+  margin: 0 0 12px;
+  font-size: 16px;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 6px;
+}
+
+.field{ margin-bottom: 10px; }
+
+.field label{
+  display: block;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.field input,
+.field select{
+  width: 100%;
+  padding: 6px;
+  font-size: 14px;
+}
+
+.inline{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.sub-title{
+  margin: 12px 0 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #333;
+  border-left: 4px solid #0b2a4a;
+  padding-left: 8px;
+}
+
+/* =======================================================
+   COLLAPSIBLE
+   ======================================================= */
+.collapsible-header{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  user-select: none;
+}
+
+.collapsible-header h3,
+.collapsible-header h4{
+  margin: 0;
+  font-size: 16px;
+}
+
+.collapsible-header .arrow{
+  display: inline-block;
+  transition: transform 0.25s ease;
+  font-size: 14px;
+}
+
+.collapsible-body{
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
+}
+
+.collapsible.open .collapsible-body{
+  max-height: none;
+  overflow: visible;
+}
+
+.collapsible.open .arrow{
+  transform: rotate(90deg);
+}
+
+/* =======================================================
+   MAIN PANEL (scroll SOLO qui)
+   ======================================================= */
+.main-panel{
+  flex: 1;
+  background: #dfe3e8;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 16px;
+
+  overflow: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.preview{
+  width: 100%;
+  height: 100%;
+  /* max-width: 900px; */
+  aspect-ratio: 210 / 297;
+  background: #fff;
+
+  overflow: auto;
+}
+
+/* immagine render */
+.preview img{
+  width: 100%;
+  height: auto;
+  display: block;
+  user-select: none;
+  pointer-events: none;
+}
+
+.thumbnail{
+  margin-top: 8px;
+  text-align: center;
+  font-size: 12px;
+  color: #555;
+  cursor: pointer;
+}
+
+/* =======================================================
+   CARGO LAYOUT VIEW
+   ======================================================= */
+#cargoLayoutView{
+  width: 100%;
+  height: auto;
+  background: #fff;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#cargoLayoutView img,
+.block img{
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+#closeCargoLayout{
+  position: absolute;
+  top: 12px;
+  right: 12px;
+
+  background: #b00020;
+  color: #fff;
+  border: none;
+
+  font-size: 22px;
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+/* =======================================================
+   FOOTER STATUS
+   ======================================================= */
+#weighingMarquee{ will-change: transform; }
+
+.status-ok   { color: #1b8f3a; }
+.status-warn { color: #d9822b; }
+.status-err  { color: #b00020; }
+
+/* =======================================================
+   SPINNER
+   ======================================================= */
+.spinner{
+  width: 28px;
+  height: 28px;
+  border: 4px solid #ddd;
+  border-top-color: #0b2a4a;
+  border-radius: 50%;
+  animation: spin 0.9s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* =======================================================
+   TABLET / iPAD (layout a colonna)
+   ======================================================= */
+@media (max-width: 1024px){
+  :root{ --ui-scale: 0.85; }
+
+  .container{
+    flex-direction: column;
+  }
+
+  .left-panel{
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ccc;
+  }
+
+  .main-panel{
+    padding-bottom: 16px;
+  }
+}
+
+/* =======================================================
+   MOBILE UI (structure only) — Step 1
+   ======================================================= */
+
+.mobile-only { display: none; }
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+  /* Nascondi header desktop e footer desktop (mobile usa barre dedicate) */
+  header { display: none !important; }
+  footer { display: none !important; }
+#exportPdfBtn { display: none !important; }
+
+  .mobile-only { display: block; }
+
+  /* Layout: una vista alla volta (gestita in JS Step 2) */
+    .container {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: calc(56px + env(safe-area-inset-top, 0px));
+    bottom: calc(56px + env(safe-area-inset-bottom, 0px));
+    margin: 0;
+    overflow: hidden;
+  }
+
+  .left-panel, .main-panel {
+    height: 100%;
+    padding-bottom: 20px; /* niente 90px, perché la bottom bar è fuori dal flow */
+  }
+
+  /* ---------- Mobile Top Bar ---------- */
+    #mobileTopBar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    top: 0;
+    z-index: 60;
+
+    height: 56px;
+    padding-top: env(safe-area-inset-top, 0px);
+
+    background: #0b2a4a;
+    color: #fff;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .mob-icon-btn {
+    border: none;
+    background: transparent;
+    color: inherit;
+    font-size: 22px;
+    width: 40px;
+    height: 40px;
+    border-radius: 10px;
+  }
+
+  .mob-title {
+    flex: 1;
+    text-align: center;
+    font-weight: 700;
+    font-size: 15px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  #variantSelectMobile {
+    font-size: 14px;
+    padding: 6px 8px;
+    border-radius: 8px;
+    border: 1px solid rgba(255,255,255,0.35);
+    background: rgba(255,255,255,0.12);
+    color: #fff;
+    outline: none;
+  }
+
+  /* ---------- Mobile Bottom Bar ---------- */
+    #mobileBottomBar {
+    position: fixed;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 60;
+
+    height: 56px;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+
+    background: #e0e3e7;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding-left: 10px;
+    padding-right: 10px;
+
+    border-top: 1px solid #cfd6de;
+  }
+
+  .mob-tab {
+    border: 1px solid #bfc7d1;
+    background: #fff;
+    padding: 8px 10px;
+    border-radius: 10px;
+    font-size: 13px;
+    white-space: nowrap;
+  }
+
+  .mob-tab-active {
+    background: #0b2a4a;
+    color: #fff;
+    border-color: #0b2a4a;
+  }
+
+  .mob-status {
+    margin-left: auto;
+    font-size: 12px;
+    font-weight: 600;
+    color: #333;
+    white-space: nowrap;
+  }
+
+  /* ---------- Mobile Menu ---------- */
+  .mobile-backdrop {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.35);
+    z-index: 80;
+  }
+
+  .mobile-menu {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: min(86vw, 360px);
+    height: 100dvh;
+    background: #fff;
+    z-index: 90;
+    box-shadow: 8px 0 24px rgba(0,0,0,0.22);
+    display: flex;
+    flex-direction: column;
+  }
+
+  .mobile-menu-header {
+    height: 56px;
+    padding: 0 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #e5e7eb;
+    background: #f8fafc;
+  }
+
+  .mobile-menu-body {
+    padding: 14px 12px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .mobile-menu-section {
+    border: 1px solid #e5e7eb;
+    border-radius: 12px;
+    padding: 12px;
+    margin-bottom: 12px;
+    background: #fff;
+  }
+
+  .mobile-menu-section-title {
+    font-weight: 700;
+    margin-bottom: 8px;
+    font-size: 14px;
+    color: #0b2a4a;
+  }
+
+  .mob-primary-btn {
+    width: 100%;
+    padding: 12px 12px;
+    border-radius: 12px;
+    border: none;
+    background: #0b2a4a;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 700;
+  }
+
+  /* ---------- Make panels fill between bars ---------- */
+  .container {
+    display: flex;
+  }
+
+  .left-panel {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 90px; /* spazio sopra bottom bar */
+  }
+
+  .main-panel {
+    flex: 1;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 90px;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<!-- ================= HEADER ================= -->
+<header>
+  <img src="./assets/atr42_header.png" alt="ATR 42" />
+  <div class="title">ATR 42MP – Weight &amp; Balance</div>
+  <div class="variant">
+    <label>Variant</label><br />
+    <select id="variantSelect">
+      <option value="10-01">10-01</option>
+      <option value="10-02">10-02</option>
+      <option value="10-03">10-03</option>
+    </select>
+  </div>
+</header>
+
+<!-- ================= MOBILE TOP BAR (only mobile) ================= -->
+<div id="mobileTopBar" class="mobile-only">
+  <button id="mobileMenuBtn" class="mob-icon-btn" aria-label="Menu">☰</button>
+
+  <div class="mob-title">W&amp;B ATR 42MP</div>
+
+  <div class="mob-variant">
+    <select id="variantSelectMobile" aria-label="Variant">
+      <option value="10-01">10-01</option>
+      <option value="10-02">10-02</option>
+      <option value="10-03">10-03</option>
+    </select>
+  </div>
+</div>
+
+<!-- ================= MOBILE SIDE MENU (only mobile) ================= -->
+<div id="mobileMenuBackdrop" class="mobile-only mobile-backdrop" style="display:none;"></div>
+
+<aside id="mobileMenu" class="mobile-only mobile-menu" style="display:none;">
+  <div class="mobile-menu-header">
+    <div style="font-weight:700;">Menu</div>
+    <button id="mobileMenuCloseBtn" class="mob-icon-btn" aria-label="Close">✕</button>
+  </div>
+
+  <div class="mobile-menu-body">
+    <div class="mobile-menu-section">
+      <div class="mobile-menu-section-title">About</div>
+      <div style="font-size:13px; opacity:0.85; line-height:1.35;">
+        ATR 42MP – Weight &amp; Balance Tool<br/>
+        <span>Release 1.0</span>
+      </div>
+    </div>
+
+    <div class="mobile-menu-section">
+      <div class="mobile-menu-section-title">Dati ufficiali</div>
+      <div id="officialDataBox"
+           style="font-size:13px; line-height:1.35; opacity:0.9; white-space:pre-wrap;">
+        Caricamento…
+      </div>
+    </div>
+
+    <div class="mobile-menu-section">
+      <button id="exportPdfBtnMobile" class="mob-primary-btn">
+        Esporta PDF
+      </button>
+    </div>
+  </div>
+</aside>
+
+<!-- ================= MAIN ================= -->
+<div class="container">
+
+  <!-- LEFT PANEL -->
+  <aside class="left-panel">
+
+  <!-- ================= CREW / PAX ================= -->
+  <div class="block">
+    <div class="collapsible open">
+      <div class="collapsible-header">
+        <span class="arrow">▶</span>
+        <h3>Crew / Pax</h3>
+      </div>
+
+      <div class="collapsible-body">
+
+        <!-- ================= MINIMUM CREW ================= -->
+<div style="font-size:13px;font-weight:600;margin-bottom:6px;">
+  Minimum Crew
+</div>
+
+<div class="inline">
+  <span>CM1</span>
+  <input type="checkbox" checked disabled />
+</div>
+
+<div class="inline">
+  <span>CM2</span>
+  <input type="checkbox" checked disabled />
+</div>
+
+<div class="inline">
+  <span>Observer 1</span>
+  <input type="checkbox" id="observer1" data-crew-key="OBSERVER_1" disabled />
+</div>
+
+<hr style="border:0;border-top:1px solid #ddd;margin:10px 0;" />
+
+<!-- ================= OPTIONAL CREW ================= -->
+<div class="inline">
+  <span>CM3</span>
+  <input type="checkbox" id="cm3Toggle" />
+</div>
+
+<div class="inline">
+  <span>Operator 1</span>
+  <input type="checkbox" id="operator1" data-crew-key="OPERATOR_1" />
+</div>
+
+<div class="inline">
+  <span>Operator 2</span>
+  <input type="checkbox" id="operator2" data-crew-key="OPERATOR_2" />
+</div>
+
+<div class="inline">
+  <span>Observer 2</span>
+  <input type="checkbox" id="observer2" data-crew-key="OBSERVER_2" />
+</div>
+
+        <hr style="border:0;border-top:1px solid #ddd;margin:10px 0;" />
+
+        <div class="field">
+          <label>Rest Row 1 (0–2)</label>
+          <input type="number" id="restRow1" data-crew-key="REST_ROW1" min="0" max="2" step="1" />
+        </div>
+
+        <div class="field">
+          <label>Rest Row 2 (0–2)</label>
+          <input type="number" id="restRow2" data-crew-key="REST_ROW2" min="0" max="2" step="1" />
+        </div>
+
+        <div class="field">
+          <label>Debrief Row 1 (0–2)</label>
+          <input type="number" id="debriefRow1" data-crew-key="DEBRIEF_ROW1" min="0" max="2" step="1" />
+        </div>
+
+        <div class="field">
+          <label>Debrief Row 2 (0–2)</label>
+          <input type="number" id="debriefRow2" data-crew-key="DEBRIEF_ROW2" min="0" max="2" step="1" />
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= SV ================= -->
+  <div class="block">
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span class="arrow">▶</span>
+        <h3>SV – Sicurezza Volo</h3>
+      </div>
+
+      <div class="collapsible-body">
+        <div id="svContainer"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CONFIG ITEMS ================= -->
+  <div class="block">
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span class="arrow">▶</span>
+        <h3>Config Items</h3>
+      </div>
+
+      <div class="collapsible-body">
+        <div id="configItemsContainer">
+          <div style="font-size:12px;color:#666;">
+            Nessun config item caricato
+          </div>
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:12px;">
+  <button id="applyConfigBtn"
+          style="flex:1; padding:10px; font-size:16px;">
+    Apply configuration
+  </button>
+
+  <button id="printConfigBtn"
+          style="flex:1; padding:10px; font-size:16px;">
+    Print configuration
+  </button>
+</div>
+
+<div id="applyConfigMsg"
+     style="font-size:12px;color:#666;margin-top:4px;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= CARGO ================= -->
+  <div class="block" id="cargo-section">
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span class="arrow">▶</span>
+        <h3>Cargo</h3>
+      </div>
+
+      <div class="collapsible-body">
+
+        <div class="field">
+          <label>FWD LH (kg)</label>
+          <input type="number" id="cargoLH" min="0" />
+        </div>
+
+        <div class="field">
+          <label>FWD RH (kg)</label>
+          <input type="number" id="cargoRH" min="0" />
+        </div>
+
+        <div class="field">
+          <label>AFT (kg)</label>
+          <input type="number" id="cargoAFT" min="0" />
+        </div>
+
+        <div class="field">
+          <label>Crew Baggage (kg)</label>
+          <input type="number" id="crewBaggageKg" min="0" />
+        </div>
+
+        <div class="field">
+          <label>Ballast (kg)</label>
+          <input type="number" id="ballastKg" min="0" />
+        </div>
+
+        <hr />
+
+        <div class="collapsible">
+          <div class="collapsible-header">
+            <span class="arrow">▶</span>
+            <h4 class="sub-title">Cargo Stations</h4>
+          </div>
+          <div class="collapsible-body">
+            <div id="cargoDowContainer"></div>
+          </div>
+        </div>
+
+        <hr />
+
+        <div class="collapsible">
+          <div class="collapsible-header">
+            <span class="arrow">▶</span>
+            <h4 class="sub-title">Basic Index Correction</h4>
+          </div>
+          <div class="collapsible-body">
+            <div class="inline"><label>Zona D</label><input type="number" id="corrD" /></div>
+            <div class="inline"><label>Zona E</label><input type="number" id="corrE" /></div>
+            <div class="inline"><label>Zona F</label><input type="number" id="corrF" /></div>
+            <div class="inline"><label>Zona G</label><input type="number" id="corrG" /></div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- IMMAGINE SEMPRE VISIBILE -->
+    <img src="./assets/atr_cargo_layout.png" width="100%" />
+    <div class="thumbnail">Layout stazioni cargo</div>
+  </div>
+
+  <!-- ================= FUEL ================= -->
+  <div class="block">
+    <div class="collapsible">
+      <div class="collapsible-header">
+        <span class="arrow">▶</span>
+        <h3>Fuel</h3>
+      </div>
+
+      <div class="collapsible-body">
+        <div class="field">
+          <label>Takeoff Fuel (kg)</label>
+          <input type="number" id="takeoffFuelKg" min="0" />
+        </div>
+        <div class="field">
+          <label>Trip Fuel (kg)</label>
+          <input type="number" id="tripFuelKg" min="0" />
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FLIGHT INFO (SEMPRE APERTA) ================= -->
+  <div class="block">
+    <h3>Aircraft &amp; Flight Info</h3>
+
+    <div class="field">
+      <label>Aircraft Registration</label>
+      <input type="text" id="aircraftRegistration" disabled />
+    </div>
+
+    <div class="field"><label>Date</label><input type="date" id="flightDate" /></div>
+    <div class="field"><label>Flight Number</label><input type="text" id="flightNumber" /></div>
+    <div class="field"><label>Departure ICAO</label><input type="text" id="departureICAO" /></div>
+    <div class="field"><label>Arrival ICAO</label><input type="text" id="arrivalICAO" /></div>
+    <div class="field"><label>Prepared by</label><input type="text" id="preparedBy" /></div>
+    <div class="field"><label>Approved by</label><input type="text" id="approvedBy" /></div>
+  </div>
+
+  <button id="exportPdfBtn" style="width:100%; padding:10px; font-size:16px;">
+    Esporta PDF
+  </button>
+
+</aside>
+
+
+  <!-- MAIN PANEL -->
+<main class="main-panel">
+<div class="preview">
+
+ <div id="engineMessages" style="margin-bottom:10px;">
+
+  <!-- ERROR (bloccante) -->
+  <div id="engineErrorBox"
+       style="display:none;
+              padding:12px;
+              background:#fee2e2;
+              color:#7f1d1d;
+              border:1px solid #fecaca;
+              border-radius:6px;
+              font-size:14px;
+              font-weight:600;">
+  </div>
+
+  <!-- WARNING (non bloccanti) -->
+  <div id="engineWarningBox"
+       style="display:none;
+              margin-top:8px;
+              padding:10px;
+              background:#fff7ed;
+              color:#92400e;
+              border:1px solid #fed7aa;
+              border-radius:6px;
+              font-size:13px;">
+  </div>
+
+</div>
+  <!-- ===== RENDER VIEW ===== -->
+  <div id="renderView">
+    <img id="renderImage"
+         src="/render/wb_filled_test.png"
+         alt="WB Render" />
+  </div>
+
+  <!-- ===== CARGO LAYOUT VIEW ===== -->
+  <div id="cargoLayoutView" style="display:none; position:relative;">
+    <button id="closeCargoLayout">✕</button>
+    <img src="./assets/atr_cargo_layout.png"
+         style="max-width:100%; max-height:100%;" />
+  </div>
+
+</div>
+</div>
+</main>
+
+
+</div>
+
+<!-- ================= FOOTER ================= -->
+<footer>
+  <div style="flex:1; text-align:left;">
+    ATR 42MP – Weight &amp; Balance Tool<br/>
+    <span style="font-size:11px;">Release 1.0</span>
+  </div>
+
+ <div style="flex:2; overflow:hidden; white-space:nowrap;">
+  <div id="weighingMarquee"
+       style="position:relative; white-space:nowrap;">
+  </div>
+</div>
+
+
+  <div style="flex:1; text-align:right;">
+  <span id="engineStatus"
+        style="font-weight:600;">
+    Checking…
+  </span>
+</div>
+</footer>
+
+<!-- ================= MOBILE BOTTOM BAR (only mobile) ================= -->
+<div id="mobileBottomBar" class="mobile-only mobile-bottombar">
+  <button id="mobTabInput" class="mob-tab mob-tab-active">⚙️ Input</button>
+  <button id="mobTabRender" class="mob-tab">📄 Load &amp; Trim Sheet</button>
+  <div id="mobStatus" class="mob-status">Checking…</div>
+</div>
+
+<script>
+  const IS_MOBILE = /iPhone|iPad|Android/i.test(navigator.userAgent);
+
+  let mobileView = "input";
+  let mobileMenuOpen = false;
+
+  let marqueeX = 0;
+
+function startMarquee(el) {
+  const speed = 0.4; // px per frame (regola qui la velocità)
+
+  // misura larghezza reale
+  const textWidth = el.scrollWidth;
+  const containerWidth = el.parentElement.clientWidth;
+
+  marqueeX = containerWidth;
+
+  function step() {
+    marqueeX -= speed;
+
+    if (marqueeX < -textWidth) {
+      marqueeX = containerWidth;
+    }
+
+    el.style.transform = `translateX(${marqueeX}px)`;
+    requestAnimationFrame(step);
+  }
+
+  requestAnimationFrame(step);
+}
+
+  //==============================
+  // MOSTRA CARGO LAYOUT
+  //==============================
+  let showCargoLayout = false;
+
+//================================
+// FUNZIONE TOGGLE
+//================================
+function updateMobileView() {
+  const left = document.querySelector(".left-panel");
+  const main = document.querySelector(".main-panel");
+  if (!left || !main) return;
+
+  if (!IS_MOBILE) {
+    // DESKTOP: sempre tutto visibile
+    left.style.display = "block";
+    main.style.display = "flex";
+    return;
+  }
+
+  // MOBILE: una vista alla volta
+  if (mobileView === "input") {
+    left.style.display = "block";
+    main.style.display = "none";
+  } else {
+    left.style.display = "none";
+    main.style.display = "flex";
+  }
+
+  // Safari iOS reflow
+  document.body.offsetHeight;
+}
+
+function updateMainView() {
+  const render = document.getElementById("renderView");
+  const cargo  = document.getElementById("cargoLayoutView");
+  if (!render || !cargo) return;
+
+  if (showCargoLayout) {
+    render.style.display = "none";
+    cargo.style.display = "flex";
+  } else {
+    cargo.style.display = "none";
+    render.style.display = "block";
+  }
+}
+// =============================
+// Cargo layout toggle (MAIN PANEL)
+// =============================
+
+// click su "Layout stazioni cargo" (left panel)
+const cargoThumb = document.querySelector(".thumbnail");
+if (cargoThumb) {
+  cargoThumb.onclick = () => {
+    showCargoLayout = true;
+    updateMainView();
+  };
+}
+
+// chiusura layout cargo (X rossa)
+const closeBtn = document.getElementById("closeCargoLayout");
+if (closeBtn) {
+  closeBtn.onclick = () => {
+    showCargoLayout = false;
+    updateMainView();
+  };
+}
+
+  // =============================
+// DEBOUNCE ENGINE CALL
+// =============================
+let debounceTimer = null;
+
+function scheduleRun() {
+  clearTimeout(debounceTimer);
+  debounceTimer = setTimeout(() => {
+    runEngine();
+  }, 150); // ms 
+}
+let weighingFooterInitialized = false;
+  // =============================
+  // UI INPUT – SINGLE SOURCE OF TRUTH
+  // =============================
+  let uiInput = null;
+  let configDraft = null; // { [id]: boolean } oppure null quando non caricato
+
+  // =============================
+// FLIGHT INFO – VOLATILE (UI ONLY)
+// =============================
+let flightInfoDraft = {
+  aircraftRegistration: "",
+  date: "",
+  flightNumber: "",
+  depIcao: "",
+  arrIcao: "",
+  preparedBy: "",
+  approvedBy: ""
+};
+
+console.log("flightInfoDraft INIT", flightInfoDraft);
+  // =============================
+  // DEBUG
+  // =============================
+  function logState() {
+    // console.clear(); //
+    console.log("UI INPUT STATE");
+    console.table(uiInput);
+    console.log(JSON.stringify(uiInput, null, 2));
+  }
+
+  function cargoStationLabel(stationId) {
+  // CARGO_7_5 → Station 7,5
+  if (!stationId.startsWith("CARGO_")) return stationId;
+
+  const raw = stationId.replace("CARGO_", "");
+  const pretty = raw.replace("_", ",");
+
+  return `Station ${pretty}`;
+}
+
+function svLabel(code) {
+  let label = code;
+
+  // underscore → spazio
+  label = label.replaceAll("_", " ");
+
+  // capitalizzazione mirata
+  label = label.replace(/^AERAZUR\b/, "Aerazur");
+  label = label.replace(/^SMOKE\b/, "Smoke");
+
+  return label;
+}
+
+function svSortKey(code) {
+  // priorità manuali
+  if (code === "AERAZUR_FWD") return "01_AERAZUR_FWD";
+  if (code === "AERAZUR_AFT") return "02_AERAZUR_AFT";
+
+  // tutto il resto: ordine alfabetico stabile
+  return `10_${code}`;
+}
+
+async function loadScenarioStandard(variant) {
+  const res = await fetch(`/scenario/${variant}`);
+  const data = await res.json();
+
+  if (!data.ok) throw new Error(data.error || "Scenario load failed");
+
+  // Copia di lavoro dello scenario standard
+  uiInput = structuredClone(data.input);
+  uiInput.variant = variant;
+
+  // =============================
+// Popola campi UI (scenario standard)
+// =============================
+
+// variant
+document.getElementById("variantSelect").value = variant;
+
+flightInfoDraft.aircraftRegistration = uiInput.aircraftRegistration ?? "";
+document.getElementById("aircraftRegistration").value =
+  flightInfoDraft.aircraftRegistration;
+
+// fuel
+document.getElementById("takeoffFuelKg").value =
+  uiInput.takeoffFuelKg ?? "";
+
+document.getElementById("tripFuelKg").value =
+  uiInput.tripFuelKg ?? "";
+
+// cargo
+document.getElementById("cargoLH").value =
+  uiInput.cargoKg?.LH_FW ?? "";
+
+document.getElementById("cargoRH").value =
+  uiInput.cargoKg?.RH_FW ?? "";
+
+document.getElementById("cargoAFT").value =
+  uiInput.cargoKg?.AFT ?? "";
+
+document.getElementById("ballastKg").value =
+  uiInput.cargoKg?.BALLAST ?? "";
+
+  document.getElementById("crewBaggageKg").value =
+  uiInput.crewBaggageKg ?? "";
+
+  // ===== Cargo DOW =====
+const container = document.getElementById("cargoDowContainer");
+container.innerHTML = "";
+
+for (const [stationId, kg] of Object.entries(uiInput.cargoStationsKg ?? {})) {
+  const row = document.createElement("div");
+  row.className = "inline";
+
+  row.innerHTML = `
+    <label>${cargoStationLabel(stationId)}</label>
+    <input type="number" min="0" value="${kg}" data-station="${stationId}" />
+  `;
+
+  container.appendChild(row);
+}
+
+document.getElementById("corrD").value =
+  uiInput.basicIndexCorrection?.D ?? 0;
+document.getElementById("corrE").value =
+  uiInput.basicIndexCorrection?.E ?? 0;
+document.getElementById("corrF").value =
+  uiInput.basicIndexCorrection?.F ?? 0;
+document.getElementById("corrG").value =
+  uiInput.basicIndexCorrection?.G ?? 0;
+// =============================
+// CM3 (toggle)
+// =============================
+const cm3Toggle = document.getElementById("cm3Toggle");
+if (cm3Toggle) {
+  cm3Toggle.checked = !!uiInput.cm3Installed;
+}
+
+// =============================
+// CREW / PAX – sync scenario → UI
+// =============================
+const crewMap = {
+  operator1: "OPERATOR_1",
+  operator2: "OPERATOR_2",
+  observer1: "OBSERVER_1",
+  observer2: "OBSERVER_2",
+  restRow1: "REST_ROW1",
+  restRow2: "REST_ROW2",
+  debriefRow1: "DEBRIEF_ROW1",
+  debriefRow2: "DEBRIEF_ROW2"
+};
+
+Object.entries(crewMap).forEach(([inputId, key]) => {
+  const el = document.getElementById(inputId);
+  if (!el) return;
+
+  const val = uiInput.cabinCrewOccupants?.[key] ?? 0;
+
+  if (el.type === "checkbox") {
+    // toggle 0/1
+    el.checked = !!val;
+  } else {
+    // numeric 0/1/2
+    el.value = val;
+  }
+
+  // aircraft registration
+document.getElementById("aircraftRegistration").value =
+  uiInput.aircraftRegistration ?? "";
+
+});
+
+renderSvControls();
+renderConfigItems();
+logState();
+}
+  
+  // =============================
+// ENGINE ERROR (BLOCCANTE)
+// =============================
+function showEngineError(msg) {
+  const box = document.getElementById("engineErrorBox");
+  if (!box) return;
+  box.style.display = "block";
+  box.innerHTML = msg;
+}
+
+function clearEngineError() {
+  const box = document.getElementById("engineErrorBox");
+  if (!box) return;
+  box.style.display = "none";
+  box.innerHTML = "";
+}
+
+// =============================
+// ENGINE WARNINGS (NON BLOCCANTI)
+// =============================
+function clearEngineWarnings() {
+  const box = document.getElementById("engineWarningBox");
+  if (!box) return;
+  box.style.display = "none";
+  box.innerHTML = "";
+}
+
+function showEngineWarnings(warningsArray) {
+  const box = document.getElementById("engineWarningBox");
+  if (!box) return;
+
+  const warnings = Array.isArray(warningsArray) ? warningsArray : [];
+  if (warnings.length === 0) {
+    clearEngineWarnings();
+    return;
+  }
+
+  const title = (code) => code.replaceAll("_", " ");
+
+  const line = (w) => {
+    const actual = Math.round(Number(w.actualKg ?? 0));
+    const limit  = Math.round(Number(w.limitKg ?? 0));
+
+    // testo per codice (SEMPRE usando actualKg del warning)
+    switch (w.code) {
+      case "MAX_TAKEOFF_WEIGHT":
+        return `Actual Takeoff Weight: ${actual} kg (Limit ${limit} kg)`;
+      case "MAX_LANDING_WEIGHT":
+        return `Actual Landing Weight: ${actual} kg (Limit ${limit} kg)`;
+      case "MAX_ZERO_FUEL_WEIGHT":
+        return `Actual Zero Fuel Weight: ${actual} kg (Limit ${limit} kg)`;
+      case "MIN_FLIGHT_WEIGHT":
+        return `Actual Landing Weight: ${actual} kg (Limit ${limit} kg)`;
+      default:
+        return `Actual: ${actual} kg (Limit ${limit} kg)`;
+    }
+  };
+
+  box.innerHTML = warnings.map(w => `
+    <div style="margin-bottom:8px;">
+      <b>⚠️ Operational warnings – ${title(w.code)}</b><br/>
+      ${line(w)}
+    </div>
+  `).join("");
+
+  box.style.display = "block";
+}
+// =============================
+// ENGINE STATUS
+// =============================
+function setEngineStatus(text, cls) {
+  const desk = document.getElementById("engineStatus");
+  const mob  = document.getElementById("mobStatus");
+
+  if (desk) {
+    desk.textContent = text;
+    desk.className = cls;
+  }
+
+  if (mob) {
+    mob.textContent = text.replace("Operational – ", "");
+    mob.className = cls;
+  }
+}
+// =============================
+// RUN ENGINE (PULITO)
+// =============================
+async function runEngine() {
+  if (!uiInput) return;
+
+  setEngineStatus("Operational – Computing…", "status-warn");
+
+  try {
+    const res = await fetch("/compute", {
+      method: "POST",
+      cache: "no-store",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(uiInput)
+    });
+
+    const data = await res.json();
+    console.log("=== DEBUG CLIENT /compute RESPONSE ===");
+console.log("ok:", data.ok);
+console.log("result.takeoffWeight:", data?.result?.takeoffWeight);
+console.log("result.landingWeight:", data?.result?.landingWeight);
+console.log("warnings.weight:", data?.result?.warnings?.weight);
+
+    // ❌ ERRORE BLOCCANTE
+    if (!data.ok) {
+      clearEngineWarnings();
+     let msg = "<b>❌ Engine error</b><br/>";
+
+if (Array.isArray(data.errors)) {
+  msg += "<ul style='margin:6px 0 0 18px;padding:0;'>";
+  data.errors.forEach(e => {
+    msg += `<li>${e.message}</li>`;
+  });
+  msg += "</ul>";
+} else if (typeof data.error === "string") {
+  msg += data.error;
+}
+
+showEngineError(msg);
+      setEngineStatus("Operational – Engine Error", "status-err");
+      return;
+    }
+
+    // ✅ OK
+    clearEngineError();
+    showEngineWarnings(data.result?.warnings?.weight);
+
+    const img = document.getElementById("renderImage");
+    if (img && data.renderUrl) {
+      img.src = data.renderUrl + "?t=" + Date.now();
+    }
+
+    setEngineStatus("Operational – Engine Connected", "status-ok");
+
+  } catch (err) {
+    clearEngineWarnings();
+    showEngineError(
+      "<b>❌ Network / server error</b><br/>" + err.message
+    );
+    setEngineStatus("Operational – Network Error", "status-err");
+  }
+}
+
+   // =============================
+  // INPUT BINDINGS  (VERSIONE FINALE CORRETTA)
+  // =============================
+
+  document.getElementById("variantSelect").addEventListener("change", async e => {
+  const v = e.target.value;
+
+  try {
+    await loadScenarioStandard(v); // <-- qui resetti davvero allo scenario standard
+    scheduleRun();
+  } catch (err) {
+    console.error(err);
+    alert("Errore caricamento scenario standard: " + err.message);
+  }
+  });
+
+async function renderConfigItems() {
+  const container = document.getElementById("configItemsContainer");
+  if (!container || !uiInput?.variant) return;
+
+  container.innerHTML = "Loading...";
+
+  try {
+    const res = await fetch(`/config-items/${uiInput.variant}`);
+    const data = await res.json();
+
+    if (!data.ok) {
+      container.innerHTML = "Errore caricamento config items";
+      return;
+    }
+
+    const items = data.configItems;
+    const state = data.configState || {};
+
+    if (!Array.isArray(items) || items.length === 0) {
+      container.innerHTML = "Nessun config item per questa variante";
+      return;
+    }
+
+  // crea draft clonando lo stato attuale (una sola volta per load)
+configDraft = { ...state };
+
+container.innerHTML = items
+  .map(item => {
+    const installed = !!configDraft[item.id];
+    return `
+      <div class="inline">
+        <span style="flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+          ${item.description || item.id}
+        </span>
+
+        <label style="display:flex;align-items:center;gap:8px;">
+          <input type="checkbox"
+                 data-config-id="${item.id}"
+                 ${installed ? "checked" : ""}/>
+          <span style="font-weight:600;color:${installed ? "#1b8f3a" : "#b00020"}">
+            ${installed ? "INSTALLED" : "REMOVED"}
+          </span>
+        </label>
+      </div>
+    `;
+  })
+  .join("");
+  } catch (err) {
+    console.error(err);
+    container.innerHTML = "Errore network";
+  }
+
+  // toggle handler (evita doppio bind)
+if (!container.dataset.bound) {
+  container.addEventListener("change", e => {
+    const el = e.target;
+    if (!el || !el.dataset || !el.dataset.configId) return;
+
+    const id = el.dataset.configId;
+    configDraft[id] = !!el.checked;
+
+    // aggiorna testo colore SOLO della riga (senza rigenerare tutto)
+    const label = el.parentElement?.querySelector("span");
+    if (label) {
+      label.textContent = el.checked ? "INSTALLED" : "REMOVED";
+      label.style.color = el.checked ? "#1b8f3a" : "#b00020";
+    }
+  });
+
+  container.dataset.bound = "1";
+}
+}
+  // =============================
+// SV – UI builder (real codes from scenario standard)
+// =============================
+function renderSvControls() {
+  const container = document.getElementById("svContainer");
+  if (!container) return;
+
+  const svQty = uiInput?.svQty ?? {};
+  const svInstalled = uiInput?.svInstalled ?? {};
+
+  // unione codici reali
+  const codes = Array.from(
+    new Set([...Object.keys(svQty), ...Object.keys(svInstalled)])
+  ).sort((a, b) => svSortKey(a).localeCompare(svSortKey(b), "it"));
+
+  if (codes.length === 0) {
+    container.innerHTML = `<div style="font-size:12px;color:#666;">Nessuna dotazione SV nello scenario.</div>`;
+    return;
+  }
+
+  // costruzione righe
+  container.innerHTML = codes
+    .map((code) => {
+      const hasQty = Object.prototype.hasOwnProperty.call(svQty, code);
+      const hasToggle = Object.prototype.hasOwnProperty.call(svInstalled, code);
+
+      const qtyVal = hasQty ? Number(svQty[code] ?? 0) : 0;
+      const toggleVal = hasToggle ? !!svInstalled[code] : false;
+
+      // se esistono entrambi: mostro toggle + qty
+      const toggleHtml = hasToggle
+        ? `
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+            <input type="checkbox"
+              data-sv-type="installed"
+              data-sv-code="${code}"
+              ${toggleVal ? "checked" : ""}
+            />
+            <span>Installed</span>
+          </label>
+        `
+        : "";
+
+      const qtyHtml = hasQty
+        ? `
+          <label style="display:flex;align-items:center;gap:8px;font-size:13px;">
+            <span>Qty</span>
+            <input type="number" min="0" step="1"
+              value="${qtyVal}"
+              data-sv-type="qty"
+              data-sv-code="${code}"
+              style="width:110px;"
+            />
+          </label>
+        `
+        : "";
+
+      // layout riga
+      return `
+        <div class="inline" style="align-items:flex-start;">
+          <div style="flex:1;min-width:0;">
+            <div style="font-size:13px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;">
+              ${svLabel(code)}
+            </div>
+          </div>
+          <div style="display:flex;flex-direction:column;gap:6px;align-items:flex-end;">
+            ${toggleHtml}
+            ${qtyHtml}
+          </div>
+        </div>
+      `;
+    })
+    .join("");
+}
+
+// =============================
+// SV – event delegation (bind once)
+// =============================
+let svBound = false;
+
+function bindSvDelegationOnce() {
+  if (svBound) return;
+  const container = document.getElementById("svContainer");
+  if (!container) return;
+
+  const handler = (e) => {
+    const el = e.target;
+    if (!el || !el.dataset) return;
+
+    const code = el.dataset.svCode;
+    const type = el.dataset.svType;
+    if (!code || !type) return;
+
+    if (type === "installed") {
+      if (!uiInput.svInstalled) uiInput.svInstalled = {};
+      uiInput.svInstalled[code] = !!el.checked;
+      logState();
+      scheduleRun();
+      return;
+    }
+
+    if (type === "qty") {
+      if (!uiInput.svQty) uiInput.svQty = {};
+      uiInput.svQty[code] = Number(el.value || 0);
+      logState();
+      scheduleRun();
+      return;
+    }
+  };
+
+  container.addEventListener("change", handler);
+  container.addEventListener("input", handler);
+
+  svBound = true;
+}
+let inputsBound = false;
+function bindInputsOnce(){
+  if (inputsBound) return;
+  bindInputs();
+  inputsBound =true;
+ } 
+  function bindInputs() {
+  if (inputsBound) return;
+  inputsBound = true;
+
+  bindSvDelegationOnce();
+
+  // =============================
+  // FUEL
+  // =============================
+  document.getElementById("takeoffFuelKg").onchange = e => {
+    uiInput.takeoffFuelKg = Number(e.target.value || 0);
+    logState();
+    runEngine();
+  };
+
+  document.getElementById("tripFuelKg").onchange = e => {
+    uiInput.tripFuelKg = Number(e.target.value || 0);
+    logState();
+    runEngine();
+  };
+
+  // =============================
+  // CARGO
+  // =============================
+  document.getElementById("cargoLH").onchange = e => {
+    uiInput.cargoKg.LH_FW = Number(e.target.value || 0);
+    runEngine();
+  };
+
+  document.getElementById("cargoRH").onchange = e => {
+    uiInput.cargoKg.RH_FW = Number(e.target.value || 0);
+    runEngine();
+  };
+
+  document.getElementById("cargoAFT").onchange = e => {
+    uiInput.cargoKg.AFT = Number(e.target.value || 0);
+    runEngine();
+  };
+
+  document.getElementById("ballastKg").onchange = e => {
+    uiInput.cargoKg.BALLAST = Number(e.target.value || 0);
+    runEngine();
+  };
+
+  document.getElementById("crewBaggageKg").onchange = e => {
+    uiInput.crewBaggageKg = Number(e.target.value || 0);
+    runEngine();
+  };
+
+  document
+    .getElementById("cargoDowContainer")
+    .addEventListener("change", e => {
+      if (!e.target.dataset.station) return;
+      const stationId = e.target.dataset.station;
+      uiInput.cargoStationsKg[stationId] = Number(e.target.value || 0);
+      runEngine();
+    });
+
+  document.getElementById("corrD").onchange = e => {
+    uiInput.basicIndexCorrection.D = Number(e.target.value || 0);
+    runEngine();
+  };
+  document.getElementById("corrE").onchange = e => {
+    uiInput.basicIndexCorrection.E = Number(e.target.value || 0);
+    runEngine();
+  };
+  document.getElementById("corrF").onchange = e => {
+    uiInput.basicIndexCorrection.F = Number(e.target.value || 0);
+    runEngine();
+  };
+  document.getElementById("corrG").onchange = e => {
+    uiInput.basicIndexCorrection.G = Number(e.target.value || 0);
+    runEngine();
+  };
+
+  // =============================
+  // CM3
+  // =============================
+  const cm3Toggle = document.getElementById("cm3Toggle");
+  if (cm3Toggle) {
+    cm3Toggle.onchange = e => {
+      uiInput.cm3Installed = e.target.checked;
+      logState();
+      runEngine();
+    };
+  }
+
+  // =============================
+// CREW OCCUPANTS (ROBUST)
+// =============================
+[
+  "operator1",
+  "operator2",
+  "observer1",
+  "observer2",
+  "restRow1",
+  "restRow2",
+  "debriefRow1",
+  "debriefRow2"
+].forEach(inputId => {
+  const el = document.getElementById(inputId);
+  if (!el) return;
+
+  const key = el.dataset.crewKey;
+  if (!key) return;
+
+  if (el.type === "checkbox") {
+    el.oninput = e => {
+      uiInput.cabinCrewOccupants[key] = e.target.checked ? 1 : 0;
+      logState();
+      scheduleRun();
+    };
+  } else {
+    el.oninput = e => {
+      uiInput.cabinCrewOccupants[key] = Number(e.target.value || 0);
+      logState();
+      scheduleRun();
+    };
+  }
+});
+
+  // =============================
+  // FLIGHT INFO – UI ONLY
+  // =============================
+  const dateEl = document.getElementById("flightDate");
+  if (dateEl) {
+    dateEl.oninput = e => {
+      flightInfoDraft.date = e.target.value || "";
+      console.log("flightInfoDraft", flightInfoDraft);
+    };
+  }
+
+  const flightNumberEl = document.getElementById("flightNumber");
+  if (flightNumberEl) {
+    flightNumberEl.oninput = e => {
+      flightInfoDraft.flightNumber = e.target.value || "";
+      console.log("flightInfoDraft", flightInfoDraft);
+    };
+  }
+
+  const depEl = document.getElementById("departureICAO");
+  if (depEl) {
+    depEl.oninput = e => {
+      flightInfoDraft.depIcao = e.target.value.toUpperCase();
+      console.log("flightInfoDraft", flightInfoDraft);
+    };
+  }
+
+  const arrEl = document.getElementById("arrivalICAO");
+  if (arrEl) {
+    arrEl.oninput = e => {
+      flightInfoDraft.arrIcao = e.target.value.toUpperCase();
+      console.log("flightInfoDraft", flightInfoDraft);
+    };
+  }
+
+  const preparedEl = document.getElementById("preparedBy");
+  if (preparedEl) {
+    preparedEl.oninput = e => {
+      flightInfoDraft.preparedBy = e.target.value || "";
+      console.log("flightInfoDraft", flightInfoDraft);
+    };
+  }
+
+  const approvedEl = document.getElementById("approvedBy");
+  if (approvedEl) {
+    approvedEl.oninput = e => {
+      flightInfoDraft.approvedBy = e.target.value || "";
+      console.log("flightInfoDraft", flightInfoDraft);
+    };
+  }
+
+  // =============================
+// EXPORT PDF
+// =============================
+const exportBtn = document.getElementById("exportPdfBtn");
+const exportBtnMobile = document.getElementById("exportPdfBtnMobile");
+
+if (exportBtn) {
+  exportBtn.onclick = async () => {
+    try {
+      setUiBusy(true);
+
+      const res = await fetch("/export/pdf", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          variant: uiInput?.variant,
+          flightInfo: flightInfoDraft,
+          uiDelta: uiInput
+        })
+      });
+
+      const data = await res.json();
+
+      if (!data.ok) {
+        alert("Errore export PDF: " + (data.error || "unknown"));
+        return;
+      }
+
+      // 🔥 Apertura PDF corretta per ogni dispositivo
+      if (IS_MOBILE) {
+        window.location.href = data.pdfUrl;
+      } else {
+        window.open(data.pdfUrl, "_blank");
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Errore network export PDF");
+    } finally {
+      setUiBusy(false);
+    }
+  };
+}
+
+// mobile usa lo stesso handler
+if (exportBtnMobile && exportBtn) {
+  exportBtnMobile.onclick = exportBtn.onclick;
+}
+  // =============================
+// APPLY CONFIG (persistente su file state)
+// =============================
+const applyBtn = document.getElementById("applyConfigBtn");
+const applyMsg = document.getElementById("applyConfigMsg");
+
+if (applyBtn && !applyBtn.dataset.bound) {
+  applyBtn.dataset.bound = "1";
+
+  applyBtn.onclick = async () => {
+    try {
+      if (!uiInput?.variant) {
+        alert("Variant non definita");
+        return;
+      }
+      if (!configDraft) {
+        alert("Config draft non caricato");
+        return;
+      }
+
+      if (applyMsg) applyMsg.textContent = "Saving...";
+
+      const res = await fetch(`/config-items/${uiInput.variant}`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ configState: configDraft })
+      });
+
+      const data = await res.json();
+
+      if (!data.ok) {
+        if (applyMsg) applyMsg.textContent = "Errore";
+        alert("Errore salvataggio config: " + (data.error || "unknown"));
+        return;
+      }
+
+      if (applyMsg) applyMsg.textContent = "Saved ✓";
+
+      // opzionale: recompute UNA VOLTA dopo apply
+      scheduleRun();
+
+    } catch (err) {
+      console.error(err);
+      if (applyMsg) applyMsg.textContent = "Errore network";
+      alert("Errore network salvataggio config");
+    }
+  };
+}
+}
+
+// =============================
+// PRINT CONFIGURATION (PDF)
+// =============================
+const printBtn = document.getElementById("printConfigBtn");
+
+if (printBtn && !printBtn.dataset.bound) {
+  printBtn.dataset.bound = "1";
+
+  printBtn.onclick = async () => {
+    try {
+      if (!uiInput?.variant) {
+        alert("Variant non definita");
+        return;
+      }
+
+      const res = await fetch(
+        `/config-items/${uiInput.variant}/print/pdf`,
+        { method: "POST" }
+      );
+
+      const data = await res.json();
+
+      if (!data.ok) {
+        alert("Errore stampa configurazione: " + (data.error || "unknown"));
+        return;
+      }
+
+      // 🔥 Apertura PDF corretta per ogni dispositivo
+      if (IS_MOBILE) {
+        window.location.href = data.pdfUrl;
+      } else {
+        window.open(data.pdfUrl, "_blank");
+      }
+
+    } catch (err) {
+      console.error(err);
+      alert("Errore network stampa configurazione");
+    }
+  };
+}
+// =============================
+// COLLAPSIBLE BEHAVIOR
+// =============================
+function initCollapsibles() {
+  const collapsibles = document.querySelectorAll(".collapsible");
+
+  collapsibles.forEach(c => {
+    const header = c.querySelector(".collapsible-header");
+    if (!header) return;
+
+    header.addEventListener("click", () => {
+      // chiudi tutte le altre
+      collapsibles.forEach(other => {
+        if (other !== c) other.classList.remove("open");
+      });
+
+      // toggle questa
+      c.classList.toggle("open");
+    });
+  });
+}
+
+async function loadWeighingInfo() {
+  try {
+    const res = await fetch("/weighing-info");
+    const data = await res.json();
+    if (!data.ok) return;
+
+    const parts = data.info.map(i => {
+      const w =
+        typeof i.weighingWeightKg === "number"
+          ? `${i.weighingWeightKg} kg`
+          : "Weight N/A";
+
+      return `${i.label} • Weighing Date: ${i.weighingDate} • Weight: ${w} • Approved Configuration`;
+    });
+
+    const text = "Based on Official Weighing Data — " + parts.join("   •   ");
+
+// ===== DESKTOP MARQUEE =====
+const el = document.getElementById("weighingMarquee");
+if (el) {
+  el.textContent = text;
+  startMarquee(el);
+}
+
+// ===== MOBILE MENU =====
+const officialBox = document.getElementById("officialDataBox");
+if (officialBox) {
+  officialBox.textContent = text;
+}
+
+  } catch (e) {
+    console.error(e);
+  }
+}
+
+// =============================
+// SERVER HEALTH CHECK (FOOTER)
+// =============================
+async function checkServerHealth() {
+  try {
+    const res = await fetch("/health", { cache: "no-store" });
+    if (!res.ok) throw new Error();
+    setEngineStatus("Operational – Engine Connected", "status-ok");
+    return true;
+  } catch {
+    setEngineStatus("Offline – Server Unreachable", "status-err");
+    return false;
+  }
+}
+// =============================
+// MOBILE FOOTER TABS
+// =============================
+function bindMobileFooterTabs() {
+  if (!IS_MOBILE) return;
+
+  const btnInput  = document.getElementById("mobTabInput");
+  const btnRender = document.getElementById("mobTabRender");
+
+  if (btnInput) {
+    btnInput.onclick = () => {
+      mobileView = "input";
+      btnInput.classList.add("mob-tab-active");
+      btnRender.classList.remove("mob-tab-active");
+      updateMobileView();
+    };
+  }
+
+  if (btnRender) {
+    btnRender.onclick = () => {
+      mobileView = "render";
+      btnRender.classList.add("mob-tab-active");
+      btnInput.classList.remove("mob-tab-active");
+      updateMobileView();
+    };
+  }
+}
+
+// =============================
+// MOBILE MENU (☰)
+// =============================
+function toggleMobileMenu(force) {
+  if (typeof force === "boolean") {
+    mobileMenuOpen = force;
+  } else {
+    mobileMenuOpen = !mobileMenuOpen;
+  }
+
+  const menu = document.getElementById("mobileMenu");
+  const backdrop = document.getElementById("mobileMenuBackdrop");
+  if (!menu || !backdrop) return;
+
+  menu.style.display = mobileMenuOpen ? "flex" : "none";
+  backdrop.style.display = mobileMenuOpen ? "block" : "none";
+}
+
+function closeMobileMenu() {
+  toggleMobileMenu(false);
+}
+function bindMobileMenuButton() {
+  if (!IS_MOBILE) return;
+
+  const btn = document.getElementById("mobileMenuBtn");
+  if (!btn) return;
+
+  btn.onclick = toggleMobileMenu;
+}
+
+function bindMobileMenuClose() {
+  if (!IS_MOBILE) return;
+
+  const closeBtn = document.getElementById("mobileMenuCloseBtn");
+  const backdrop = document.getElementById("mobileMenuBackdrop");
+  const menu = document.getElementById("mobileMenu");
+
+  if (closeBtn) closeBtn.onclick = closeMobileMenu;
+  if (backdrop) backdrop.onclick = closeMobileMenu;
+
+  // evita che un tap dentro al menu chiuda per bubbling (backdrop è separato, ma meglio così)
+  if (menu) menu.onclick = (e) => e.stopPropagation();
+}
+
+  // =============================
+  // INIT
+  // =============================
+  
+ (async () => {
+  try {
+    bindInputsOnce(); // ✅ bind UNA VOLTA
+
+    
+    
+
+    const initialVariant =
+      document.getElementById("variantSelect").value || "10-01";
+
+await checkServerHealth();
+    await loadScenarioStandard(initialVariant);
+
+    const variantMobile = document.getElementById("variantSelectMobile");
+if (variantMobile) {
+  variantMobile.onchange = async e => {
+    document.getElementById("variantSelect").value = e.target.value;
+    await loadScenarioStandard(e.target.value);
+    scheduleRun();
+  };
+}
+    
+    initCollapsibles();
+
+    scheduleRun(); // ✅ UNA chiamata iniziale
+    await loadWeighingInfo();
+  } catch (err) {
+    console.error(err);
+    alert("Init fallito: " + err.message);
+  }
+  if (IS_MOBILE) {
+  updateMobileView();
+  bindMobileFooterTabs();
+  bindMobileMenuButton();
+  bindMobileMenuClose();
+}
+})();
+
+console.log("CONSOLE OK");
+// =============================
+// VIEWPORT FIX (iOS SAFARI)
+// =============================
+function updateVh() {
+  const vh = window.innerHeight * 0.01;
+  document.documentElement.style.setProperty("--vh", `${vh}px`);
+}
+updateVh();
+window.addEventListener("resize", updateVh);
+
+// =============================
+// EXPORT PDF UX OVERLAY
+// =============================
+const exportOverlay = document.createElement("div");
+exportOverlay.style.cssText = `
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.35);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+`;
+exportOverlay.innerHTML = `
+  <div style="
+    background:white;
+    padding:28px 36px;
+    border-radius:10px;
+    display:flex;
+    align-items:center;
+    gap:16px;
+    font-size:16px;
+    font-weight:600;
+  ">
+    <div class="spinner"></div>
+    Creazione PDF…
+  </div>
+`;
+document.body.appendChild(exportOverlay);
+
+function setUiBusy(busy) {
+  exportOverlay.style.display = busy ? "flex" : "none";
+  document.body.style.pointerEvents = busy ? "none" : "auto";
+  exportOverlay.style.pointerEvents = "auto";
+}
+</script>
+</body>
+</html>

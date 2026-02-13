@@ -1,0 +1,162 @@
+{
+  "weighedWeight": 12298,
+  "weighedMoment": 144476.904,
+  "weighedIndex": -30.529784999999954,
+  "correctedWeight": 12568,
+  "correctedMoment": 146583.80400000003,
+  "correctedIndex": -41.850659999999806,
+  "dowWeight": 12860.699999999995,
+  "dowMoment": 150870.95100000003,
+  "dowIndex": -34.09221374999913,
+  "loadTrimBaseWeight": 12770.699999999995,
+  "loadTrimBaseMoment": 149581.25100000002,
+  "loadTrimBaseIndex": -36.19258874999937,
+  "correctedDryOperatingWeight": 12770.699999999995,
+  "correctedDryOperatingIndex": -36.19258874999937,
+  "zeroFuelWeight": 13409.699999999995,
+  "zeroFuelIndex": -16.236588749999363,
+  "takeoffWeight": 17609.699999999997,
+  "takeoffIndex": -8.802588749999362,
+  "takeoffTrim": -2.032933212932008,
+  "landingWeight": 14009.699999999997,
+  "landingIndex": -15.174588749999362,
+  "envelope": {
+    "structural": [
+      {
+        "weightKg": 10000,
+        "index": -22.8
+      },
+      {
+        "weightKg": 16200,
+        "index": -32.5
+      },
+      {
+        "weightKg": 18600,
+        "index": -17
+      },
+      {
+        "weightKg": 18600,
+        "index": 38
+      },
+      {
+        "weightKg": 10000,
+        "index": 20.2
+      },
+      {
+        "weightKg": 10000,
+        "index": -22.8
+      }
+    ],
+    "operational": [
+      {
+        "weightKg": 12900,
+        "index": -19
+      },
+      {
+        "weightKg": 16200,
+        "index": -26.5
+      },
+      {
+        "weightKg": 18600,
+        "index": -8
+      },
+      {
+        "weightKg": 18600,
+        "index": 23.8
+      },
+      {
+        "weightKg": 12900,
+        "index": 12.5
+      },
+      {
+        "weightKg": 12900,
+        "index": -19
+      }
+    ]
+  },
+  "warnings": {
+    "weight": []
+  },
+  "breakdown": [
+    {
+      "label": "WEIGHED WEIGHT",
+      "weightKg": 12298,
+      "momentKgm": 144476.904
+    },
+    {
+      "label": "Minimum crew: CM1",
+      "weightKg": 90,
+      "momentKgm": 408.6
+    },
+    {
+      "label": "Minimum crew: CM2",
+      "weightKg": 90,
+      "momentKgm": 408.6
+    },
+    {
+      "label": "Minimum crew: OBSERVER_1",
+      "weightKg": 90,
+      "momentKgm": 1289.7
+    },
+    {
+      "label": "SV: AERAZUR_FWD x1",
+      "weightKg": 23,
+      "momentKgm": 176.732
+    },
+    {
+      "label": "SV: AERAZUR_AFT x1",
+      "weightKg": 23,
+      "momentKgm": 268.18
+    },
+    {
+      "label": "SV: SAR_LIFE_RAFT x5",
+      "weightKg": 175,
+      "momentKgm": 2887.5
+    },
+    {
+      "label": "SV: SMOKE_MK6 x3",
+      "weightKg": 21.299999999999997,
+      "momentKgm": 362.09999999999997
+    },
+    {
+      "label": "SV: SMOKE_MK7 x3",
+      "weightKg": 6.6000000000000005,
+      "momentKgm": 112.2
+    },
+    {
+      "label": "SV: SAJE80_CM1",
+      "weightKg": 4.8,
+      "momentKgm": 38.4
+    },
+    {
+      "label": "SV: SAJE80_CM2",
+      "weightKg": 4.8,
+      "momentKgm": 40.8
+    },
+    {
+      "label": "SV: SAJE80_OB1",
+      "weightKg": 4.8,
+      "momentKgm": 48
+    },
+    {
+      "label": "SV: SAJE80_OB2",
+      "weightKg": 4.8,
+      "momentKgm": 50.4
+    },
+    {
+      "label": "SV: SAJE80_TEV1",
+      "weightKg": 4.8,
+      "momentKgm": 73.92
+    },
+    {
+      "label": "SV: SAJE80_TEV2",
+      "weightKg": 4.8,
+      "momentKgm": 73.92
+    },
+    {
+      "label": "Crew baggage",
+      "weightKg": 15,
+      "momentKgm": 154.995
+    }
+  ]
+}
