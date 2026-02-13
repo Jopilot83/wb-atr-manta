@@ -11,7 +11,7 @@ import { scenarioManta1003 } from "../src/scenarios/manta_10_03.standard.ts";
 // ==================================================
 // CONFIG
 // ==================================================
-const OUTPUT_PATH = "./wb_filled_test.png";
+const OUTPUT_PATH = "./render/wb_filled_test.png";
 
 const FONT = "42px Helvetica";
 const TEXT_COLOR = "#000";
@@ -861,6 +861,7 @@ function mapX(index: number): number {
   fs.writeFileSync("./wb_filled_test.pdf", canvas.toBuffer());
   console.log("✔️ PDF export completed: ./wb_filled_test.pdf");
 } else {
+  fs.mkdirSync("./render", { recursive: true});
   fs.writeFileSync(OUTPUT_PATH, canvas.toBuffer("image/png"));
   console.log("✔️ Render test completed:", OUTPUT_PATH);
 }
