@@ -11,7 +11,7 @@ import PDFDocument from "pdfkit";
 // =============================
 // CONFIG
 // =============================
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 const app = express();
 app.use(bodyParser.json());
 
@@ -660,5 +660,5 @@ const pdfUrl = "/" + pdfPath.replace(/\\/g, "/");
 // START
 // =============================
 app.listen(PORT, () => {
-  console.log(`✅ W&B bridge running on http://localhost:${PORT}`);
+  console.log(`✅ W&B bridge running on ${PORT}`);
 });
