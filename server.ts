@@ -520,7 +520,8 @@ fs.mkdirSync("state", { recursive: true });
       ["ts-node", "tools/render_test_page.ts", variant],
       { stdio: "inherit" }
     );
-
+console.log("CWD:", process.cwd());
+console.log("Root files:", fs.readdirSync(process.cwd()));
     // 🔴 PULIZIA OBBLIGATORIA
 try {
   fs.unlinkSync("state/ui_input.runtime.json");
